@@ -7,6 +7,15 @@ public class SWGQuestTask {
 	private String journalEntryTitle;
 	private String journalEntryDescription;
 	private String grantQuestOnComplete;
+	private String targetServerTemplate;
+	
+	public String getTargetServerTemplate() {
+		return targetServerTemplate;
+	}
+	
+	void setTargetServerTemplate(String targetServerTemplate) {
+		this.targetServerTemplate = targetServerTemplate;
+	}
 	
 	public Boolean getTaskOnFail() {
 		return taskOnFail;

@@ -67,6 +67,7 @@ public class SWGQuestFactory {
 					case "journalEntryTitle": swgQuestTask.setJournalEntryTitle(value); break;
 					case "journalEntryDescription": swgQuestTask.setJournalEntryDescription(value); break;
 					case "grantQuestOnComplete": swgQuestTask.setGrantQuestOnComplete(value); break;
+					case "Target Server Template": swgQuestTask.setTargetServerTemplate(value); break;
 				}
 			}
 			
