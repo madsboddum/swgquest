@@ -1,10 +1,10 @@
 package dk.madsboddum.swgquest.api;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class SWGQuest {
-	private final Collection<SWGQuestTask> tasks;
+	private final List<SWGQuestTask> tasks;
 	private String journalEntryTitle;
 	private String journalEntryDescription;
 	private String journalEntryCompletionSummary;
@@ -20,7 +20,7 @@ public class SWGQuest {
 		tasks = new ArrayList<>();
 	}
 	
-	public Collection<SWGQuestTask> getTasks() {
+	public List<SWGQuestTask> getTasks() {
 		return new ArrayList<>(tasks);
 	}
 	
