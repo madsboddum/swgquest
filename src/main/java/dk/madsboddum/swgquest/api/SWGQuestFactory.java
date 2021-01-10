@@ -66,12 +66,12 @@ public class SWGQuestFactory {
 		
 		for (XmlQuestTask xmlQuestTask : xmlQuestTasks) {
 			SWGQuestTask swgQuestTask = convertTask(xmlQuestTask);
-			XmlQuestTask subXmlQuestTask = xmlQuestTask.getSubTask();
+			Collection<XmlQuestTask> subTasks = xmlQuestTask.getSubTasks();
 			
 			swgQuestTasks.add(swgQuestTask);
 			
-			if (subXmlQuestTask != null) {
-				Collection<SWGQuestTask> subSwgQuestTasks = convertTasks(Collections.singleton(subXmlQuestTask));
+			if (subTasks != null) {
+				Collection<SWGQuestTask> subSwgQuestTasks = convertTasks(subTasks);
 				swgQuestTasks.addAll(subSwgQuestTasks);
 			}
 		}

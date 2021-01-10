@@ -151,4 +151,22 @@ public class TestSWGQuestFactory {
 		}
 	}
 	
+	@Nested
+	class PurvisKillWarriors {
+		
+		private SWGQuest swgQuest;
+		
+		@BeforeEach
+		public void loadQuest() {
+			InputStream inputStream = TestSWGQuestFactory.class.getClassLoader().getResourceAsStream("purvis_kill_warriors.qst");
+			swgQuest = SWGQuestFactory.create(inputStream);
+		}
+		
+		@Test
+		public void testSubTasks() {
+			List<SWGQuestTask> tasks = swgQuest.getTasks();
+			assertEquals(7, tasks.size());
+		}
+	}
+	
 }
