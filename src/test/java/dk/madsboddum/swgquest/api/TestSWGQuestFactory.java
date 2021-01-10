@@ -102,6 +102,7 @@ public class TestSWGQuestFactory {
 			assertEquals("Purvis, the old soldier, has told you the Tuskens have been nesting in an outlying area called Junktown. He needs help and wants to see if you've got what it takes. He has asked you to take out 5 of the Tusken Raider Zealots", task.getJournalEntryDescription());
 			assertEquals("quest/purvis_kill_soldiers", task.getGrantQuestOnComplete());
 			assertEquals("tusken_raider_zealot", task.getTargetServerTemplate());
+			assertEquals(5, task.getCount());
 		}
 	}
 }

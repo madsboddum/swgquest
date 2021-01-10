@@ -8,6 +8,15 @@ public class SWGQuestTask {
 	private String journalEntryDescription;
 	private String grantQuestOnComplete;
 	private String targetServerTemplate;
+	private Integer count;
+	
+	public Integer getCount() {
+		return count;
+	}
+	
+	void setCount(Integer count) {
+		this.count = count;
+	}
 	
 	public String getTargetServerTemplate() {
 		return targetServerTemplate;
