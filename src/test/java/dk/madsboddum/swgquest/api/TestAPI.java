@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TestSWGQuestFactory {
+public class TestAPI {
 	
 	@Nested
 	class PurvisKillZealots {
@@ -19,7 +19,7 @@ public class TestSWGQuestFactory {
 		
 		@BeforeEach
 		public void loadQuest() {
-			InputStream inputStream = TestSWGQuestFactory.class.getClassLoader().getResourceAsStream("purvis_kill_zealots.qst");
+			InputStream inputStream = TestAPI.class.getClassLoader().getResourceAsStream("purvis_kill_zealots.qst");
 			swgQuest = SWGQuestFactory.create(inputStream);
 		}
 		
@@ -121,7 +121,7 @@ public class TestSWGQuestFactory {
 		
 		@BeforeEach
 		public void loadQuest() {
-			InputStream inputStream = TestSWGQuestFactory.class.getClassLoader().getResourceAsStream("purvis_kill_soldiers.qst");
+			InputStream inputStream = TestAPI.class.getClassLoader().getResourceAsStream("purvis_kill_soldiers.qst");
 			swgQuest = SWGQuestFactory.create(inputStream);
 		}
 		
@@ -150,7 +150,7 @@ public class TestSWGQuestFactory {
 		
 		@BeforeEach
 		public void loadQuest() {
-			InputStream inputStream = TestSWGQuestFactory.class.getClassLoader().getResourceAsStream("purvis_kill_warriors.qst");
+			InputStream inputStream = TestAPI.class.getClassLoader().getResourceAsStream("purvis_kill_warriors.qst");
 			swgQuest = SWGQuestFactory.create(inputStream);
 		}
 		
@@ -168,6 +168,27 @@ public class TestSWGQuestFactory {
 			assertEquals("Incoming Message From Jabba's Palace", subTask2.getJournalEntryTitle());
 		}
 		
+		@Test
+		public void testGetTasksForStep2() {
+			List<SWGQuestTask> tasksForStep = swgQuest.getTasksForStep(2);
+			
+			SWGQuestTask firstTask = tasksForStep.get(0);
+			assertEquals("Kill 5 Tusken Warriors", firstTask.getJournalEntryTitle());
+			
+			SWGQuestTask secondTask = tasksForStep.get(1);
+			assertEquals("Incoming Message From Jabba's Palace", secondTask.getJournalEntryTitle());
+		}
+		
+		@Test
+		public void testGetTasksForStep3() {
+			List<SWGQuestTask> tasksForStep = swgQuest.getTasksForStep(3);
+			
+			SWGQuestTask firstTask = tasksForStep.get(0);
+			assertEquals("His Honor", firstTask.getJournalEntryTitle());
+			
+			SWGQuestTask secondTask = tasksForStep.get(1);
+			assertEquals("Are you still doing tasks for the mayor? Hurry up, will you? Jabba's becoming impatient!", secondTask.getCommMessageText());
+		}
 	}
 	
 }

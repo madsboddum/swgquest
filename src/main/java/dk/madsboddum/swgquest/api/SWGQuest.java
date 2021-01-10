@@ -1,5 +1,10 @@
 package dk.madsboddum.swgquest.api;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class SWGQuest {
 	private SWGQuestTask task;
 	private String journalEntryTitle;
@@ -114,4 +119,30 @@ public class SWGQuest {
 		this.journalEntryCompletionSummary = journalEntryCompletionSummary;
 	}
 	
+	/**
+	 * Retrieves tasks relevant at a given step of the quest.
+	 * @param activeStep to find tasks for
+	 * @return tasks
+	 */
+	public List<SWGQuestTask> getTasksForStep(int activeStep) {
+		if (activeStep <= 1) {
+			return Collections.singletonList(task);
+		}
+		
+		return getTasksAtStep(task.getSubTasks(), activeStep, 2);
+	}
+	
+	private List<SWGQuestTask> getTasksAtStep(List<SWGQuestTask> current, int activeStep, int depth) {
+		if (depth >= activeStep) {
+			return current;
+		}
+		
+		List<SWGQuestTask> subSubTasks = new ArrayList<>();
+		
+		for (SWGQuestTask task : current) {
+			subSubTasks.addAll(task.getSubTasks());
+		}
+		
+		return getTasksAtStep(subSubTasks, activeStep, depth + 1);
+	}
 }
