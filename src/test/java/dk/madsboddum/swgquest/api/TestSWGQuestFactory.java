@@ -163,9 +163,16 @@ public class TestSWGQuestFactory {
 		}
 		
 		@Test
-		public void testSubTasks() {
+		public void testTaskOrder() {
 			List<SWGQuestTask> tasks = swgQuest.getTasks();
 			assertEquals(7, tasks.size());
+			
+			
+			SWGQuestTask first = tasks.get(0);
+			assertEquals("kill_tusken_raider_warriors", first.getName());
+			
+			SWGQuestTask seventh = tasks.get(6);
+			assertEquals("newbie_ranged_e8", seventh.getName());
 		}
 	}
 	

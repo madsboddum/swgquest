@@ -12,6 +12,15 @@ public class SWGQuestTask {
 	private String commMessageText;
 	private String npcAppearanceServerTemplate;
 	private Boolean visible;
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+	
+	void setName(String name) {
+		this.name = name;
+	}
 	
 	public Boolean getVisible() {
 		return visible;

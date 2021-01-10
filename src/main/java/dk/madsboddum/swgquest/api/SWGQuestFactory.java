@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class SWGQuestFactory {
 	
@@ -52,7 +53,8 @@ public class SWGQuestFactory {
 		
 		Collection<XmlQuestTask> xmlQuestTasks = xmlQuest.getTasks().getTasks();
 		
-		Collection<SWGQuestTask> swgQuestTasks = convertTasks(xmlQuestTasks);
+		List<SWGQuestTask> swgQuestTasks = convertTasks(xmlQuestTasks);
+		Collections.reverse(swgQuestTasks);
 		
 		for (SWGQuestTask swgQuestTask : swgQuestTasks) {
 			swgQuest.addTask(swgQuestTask);
@@ -61,19 +63,19 @@ public class SWGQuestFactory {
 		return swgQuest;
 	}
 	
-	private static Collection<SWGQuestTask> convertTasks(Collection<XmlQuestTask> xmlQuestTasks) {
-		Collection<SWGQuestTask> swgQuestTasks = new ArrayList<>();
+	private static List<SWGQuestTask> convertTasks(Collection<XmlQuestTask> xmlQuestTasks) {
+		List<SWGQuestTask> swgQuestTasks = new ArrayList<>();
 		
 		for (XmlQuestTask xmlQuestTask : xmlQuestTasks) {
 			SWGQuestTask swgQuestTask = convertTask(xmlQuestTask);
 			Collection<XmlQuestTask> subTasks = xmlQuestTask.getSubTasks();
 			
-			swgQuestTasks.add(swgQuestTask);
-			
 			if (subTasks != null) {
 				Collection<SWGQuestTask> subSwgQuestTasks = convertTasks(subTasks);
 				swgQuestTasks.addAll(subSwgQuestTasks);
 			}
+			
+			swgQuestTasks.add(swgQuestTask);
 		}
 		
 		return swgQuestTasks;
@@ -103,6 +105,7 @@ public class SWGQuestFactory {
 				case "Comm Message Text": swgQuestTask.setCommMessageText(value); break;
 				case "NPC Appearance Server Template": swgQuestTask.setNpcAppearanceServerTemplate(value); break;
 				case "isVisible": swgQuestTask.setVisible(Boolean.valueOf(value)); break;
+				case "taskName": swgQuestTask.setName(value); break;
 			}
 		}
 		
