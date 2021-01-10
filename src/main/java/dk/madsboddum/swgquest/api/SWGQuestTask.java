@@ -9,6 +9,33 @@ public class SWGQuestTask {
 	private String grantQuestOnComplete;
 	private String targetServerTemplate;
 	private Integer count;
+	private String commMessageText;
+	private String npcAppearanceServerTemplate;
+	private Boolean visible;
+	
+	public Boolean getVisible() {
+		return visible;
+	}
+	
+	void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+	
+	public String getNpcAppearanceServerTemplate() {
+		return npcAppearanceServerTemplate;
+	}
+	
+	void setNpcAppearanceServerTemplate(String npcAppearanceServerTemplate) {
+		this.npcAppearanceServerTemplate = npcAppearanceServerTemplate;
+	}
+	
+	public String getCommMessageText() {
+		return commMessageText;
+	}
+	
+	void setCommMessageText(String commMessageText) {
+		this.commMessageText = commMessageText;
+	}
 	
 	public Integer getCount() {
 		return count;

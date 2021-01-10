@@ -55,6 +55,7 @@ public class SWGQuestFactory {
 			SWGQuestTask swgQuestTask = new SWGQuestTask();
 			
 			switch (type) {
+				case "Comm Player": swgQuestTask.setType(SWGQuestTaskType.COMM_PLAYER); break;
 				case "Destroy Multiple": swgQuestTask.setType(SWGQuestTaskType.DESTROY_MULTIPLE); break;
 			}
 			
@@ -70,6 +71,9 @@ public class SWGQuestFactory {
 					case "grantQuestOnComplete": swgQuestTask.setGrantQuestOnComplete(value); break;
 					case "Target Server Template": swgQuestTask.setTargetServerTemplate(value); break;
 					case "Count": swgQuestTask.setCount(Integer.valueOf(value)); break;
+					case "Comm Message Text": swgQuestTask.setCommMessageText(value); break;
+					case "NPC Appearance Server Template": swgQuestTask.setNpcAppearanceServerTemplate(value); break;
+					case "isVisible": swgQuestTask.setVisible(Boolean.valueOf(value)); break;
 				}
 			}
 			
