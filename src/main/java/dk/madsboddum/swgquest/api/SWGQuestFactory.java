@@ -44,6 +44,7 @@ public class SWGQuestFactory {
 				case "Faction Name": swgQuest.setFactionName(value); break;
 				case "Experience Amount": swgQuest.setExperienceAmount(Integer.parseInt(value)); break;
 				case "Experience Type": swgQuest.setExperienceType(value); break;
+				case "Tier": swgQuest.setTier(Integer.parseInt(value)); break;
 			}
 		}
 		

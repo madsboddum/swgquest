@@ -90,6 +90,13 @@ public class TestSWGQuestFactory {
 	}
 	
 	@Test
+	public void testTier() {
+		Integer tier = swgQuest.getTier();
+		
+		assertEquals(5, tier);
+	}
+	
+	@Test
 	public void testTasks() {
 		Collection<SWGQuestTask> tasks = swgQuest.getTasks();
 		

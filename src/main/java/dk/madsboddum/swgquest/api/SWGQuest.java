@@ -15,9 +15,18 @@ public class SWGQuest {
 	private String factionName;
 	private Integer experienceAmount;
 	private String experienceType;
+	private Integer tier;
 	
 	SWGQuest() {
 		tasks = new ArrayList<>();
+	}
+	
+	public Integer getTier() {
+		return tier;
+	}
+	
+	void setTier(Integer tier) {
+		this.tier = tier;
 	}
 	
 	public List<SWGQuestTask> getTasks() {
