@@ -7,7 +7,9 @@ import dk.madsboddum.swgquest.internal.XmlQuestTask;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class SWGQuestFactory {
 	
@@ -48,40 +50,64 @@ public class SWGQuestFactory {
 			}
 		}
 		
-		Collection<XmlQuestTask> tasks = xmlQuest.getTasks().getTasks();
+		Collection<XmlQuestTask> xmlQuestTasks = xmlQuest.getTasks().getTasks();
 		
-		for (XmlQuestTask task : tasks) {
-			String type = task.getType();
-			SWGQuestTask swgQuestTask = new SWGQuestTask();
-			
-			switch (type) {
-				case "Comm Player": swgQuestTask.setType(SWGQuestTaskType.COMM_PLAYER); break;
-				case "Destroy Multiple": swgQuestTask.setType(SWGQuestTaskType.DESTROY_MULTIPLE); break;
-			}
-			
-			Collection<XmlQuestData> dataCollection = task.getDataCollection();
-			
-			for (XmlQuestData xmlQuestData : dataCollection) {
-				String name = xmlQuestData.getName();
-				String value = xmlQuestData.getValue();
-				
-				switch (name) {
-					case "journalEntryTitle": swgQuestTask.setJournalEntryTitle(value); break;
-					case "journalEntryDescription": swgQuestTask.setJournalEntryDescription(value); break;
-					case "grantQuestOnComplete": swgQuestTask.setGrantQuestOnComplete(value); break;
-					case "Target Server Template": swgQuestTask.setTargetServerTemplate(value); break;
-					case "Count": swgQuestTask.setCount(Integer.valueOf(value)); break;
-					case "Comm Message Text": swgQuestTask.setCommMessageText(value); break;
-					case "NPC Appearance Server Template": swgQuestTask.setNpcAppearanceServerTemplate(value); break;
-					case "isVisible": swgQuestTask.setVisible(Boolean.valueOf(value)); break;
-				}
-			}
-			
-			swgQuestTask.setTaskOnFail(task.isTaskOnFail());
-			
+		Collection<SWGQuestTask> swgQuestTasks = convertTasks(xmlQuestTasks);
+		
+		for (SWGQuestTask swgQuestTask : swgQuestTasks) {
 			swgQuest.addTask(swgQuestTask);
 		}
 		
 		return swgQuest;
+	}
+	
+	private static Collection<SWGQuestTask> convertTasks(Collection<XmlQuestTask> xmlQuestTasks) {
+		Collection<SWGQuestTask> swgQuestTasks = new ArrayList<>();
+		
+		for (XmlQuestTask xmlQuestTask : xmlQuestTasks) {
+			SWGQuestTask swgQuestTask = convertTask(xmlQuestTask);
+			XmlQuestTask subXmlQuestTask = xmlQuestTask.getSubTask();
+			
+			swgQuestTasks.add(swgQuestTask);
+			
+			if (subXmlQuestTask != null) {
+				Collection<SWGQuestTask> subSwgQuestTasks = convertTasks(Collections.singleton(subXmlQuestTask));
+				swgQuestTasks.addAll(subSwgQuestTasks);
+			}
+		}
+		
+		return swgQuestTasks;
+	}
+	
+	private static SWGQuestTask convertTask(XmlQuestTask xmlQuestTask) {
+		SWGQuestTask swgQuestTask = new SWGQuestTask();
+		String type = xmlQuestTask.getType();
+		
+		switch (type) {
+			case "Comm Player": swgQuestTask.setType(SWGQuestTaskType.COMM_PLAYER); break;
+			case "Destroy Multiple": swgQuestTask.setType(SWGQuestTaskType.DESTROY_MULTIPLE); break;
+		}
+		
+		Collection<XmlQuestData> dataCollection = xmlQuestTask.getDataCollection();
+		
+		for (XmlQuestData xmlQuestData : dataCollection) {
+			String name = xmlQuestData.getName();
+			String value = xmlQuestData.getValue();
+			
+			switch (name) {
+				case "journalEntryTitle": swgQuestTask.setJournalEntryTitle(value); break;
+				case "journalEntryDescription": swgQuestTask.setJournalEntryDescription(value); break;
+				case "grantQuestOnComplete": swgQuestTask.setGrantQuestOnComplete(value); break;
+				case "Target Server Template": swgQuestTask.setTargetServerTemplate(value); break;
+				case "Count": swgQuestTask.setCount(Integer.valueOf(value)); break;
+				case "Comm Message Text": swgQuestTask.setCommMessageText(value); break;
+				case "NPC Appearance Server Template": swgQuestTask.setNpcAppearanceServerTemplate(value); break;
+				case "isVisible": swgQuestTask.setVisible(Boolean.valueOf(value)); break;
+			}
+		}
+		
+		swgQuestTask.setTaskOnFail(xmlQuestTask.isTaskOnFail());
+		
+		return swgQuestTask;
 	}
 }

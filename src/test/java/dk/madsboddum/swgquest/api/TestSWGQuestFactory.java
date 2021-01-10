@@ -141,6 +141,14 @@ public class TestSWGQuestFactory {
 			assertEquals("object/mobile/dressed_purvis_arrison.iff", commPlayerTask.getNpcAppearanceServerTemplate());
 			assertEquals(Boolean.FALSE, commPlayerTask.getVisible());
 		}
+		
+		@Test
+		public void testDestroyMultipleTask() {
+			List<SWGQuestTask> tasks = swgQuest.getTasks();
+			SWGQuestTask destroyMultipleTask = tasks.get(1);
+			
+			assertEquals("tusken_raider_soldier", destroyMultipleTask.getTargetServerTemplate());
+		}
 	}
 	
 }

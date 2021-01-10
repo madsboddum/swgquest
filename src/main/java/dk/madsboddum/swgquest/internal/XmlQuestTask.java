@@ -14,6 +14,9 @@ public class XmlQuestTask {
 	@XmlElement(name="data")
 	private Collection<XmlQuestData> dataCollection;
 	
+	@XmlElement(name="task")
+	private XmlQuestTask subTask;
+	
 	public String getType() {
 		return type;
 	}
@@ -24,5 +27,9 @@ public class XmlQuestTask {
 	
 	public Collection<XmlQuestData> getDataCollection() {
 		return dataCollection;
+	}
+	
+	public XmlQuestTask getSubTask() {
+		return subTask;
 	}
 }
