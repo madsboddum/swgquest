@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,20 +102,15 @@ public class TestSWGQuestFactory {
 		
 		@Test
 		public void testTasks() {
-			Collection<SWGQuestTask> tasks = swgQuest.getTasks();
+			SWGQuestTask task = swgQuest.getTask();
 			
-			assertEquals(1, tasks.size(), "The quest should have exactly one task");
-			
-			for (SWGQuestTask task : tasks) {
-				assertEquals(SWGQuestTaskType.DESTROY_MULTIPLE, task.getType());
-				assertEquals(Boolean.FALSE, task.getTaskOnFail());
-				assertEquals("Kill 5 Tusken Zealots", task.getJournalEntryTitle());
-				assertEquals("Purvis, the old soldier, has told you the Tuskens have been nesting in an outlying area called Junktown. He needs help and wants to see if you've got what it takes. He has asked you to take out 5 of the Tusken Raider Zealots", task
-						.getJournalEntryDescription());
-				assertEquals("quest/purvis_kill_soldiers", task.getGrantQuestOnComplete());
-				assertEquals("tusken_raider_zealot", task.getTargetServerTemplate());
-				assertEquals(5, task.getCount());
-			}
+			assertEquals(SWGQuestTaskType.DESTROY_MULTIPLE, task.getType());
+			assertEquals(Boolean.FALSE, task.getTaskOnFail());
+			assertEquals("Kill 5 Tusken Zealots", task.getJournalEntryTitle());
+			assertEquals("Purvis, the old soldier, has told you the Tuskens have been nesting in an outlying area called Junktown. He needs help and wants to see if you've got what it takes. He has asked you to take out 5 of the Tusken Raider Zealots", task.getJournalEntryDescription());
+			assertEquals("quest/purvis_kill_soldiers", task.getGrantQuestOnComplete());
+			assertEquals("tusken_raider_zealot", task.getTargetServerTemplate());
+			assertEquals(5, task.getCount());
 		}
 	}
 	
@@ -133,8 +127,7 @@ public class TestSWGQuestFactory {
 		
 		@Test
 		public void testCommTask() {
-			List<SWGQuestTask> tasks = swgQuest.getTasks();
-			SWGQuestTask commPlayerTask = tasks.get(0);
+			SWGQuestTask commPlayerTask = swgQuest.getTask();
 			
 			assertEquals(SWGQuestTaskType.COMM_PLAYER, commPlayerTask.getType());
 			assertEquals("Well done! Now I need you to take out some of their Soldiers. They're a bit further out from Junktown and they're a bit tougher, but I think you can do it. ", commPlayerTask.getCommMessageText());
@@ -144,8 +137,7 @@ public class TestSWGQuestFactory {
 		
 		@Test
 		public void testDestroyMultipleTask() {
-			List<SWGQuestTask> tasks = swgQuest.getTasks();
-			SWGQuestTask destroyMultipleTask = tasks.get(1);
+			SWGQuestTask destroyMultipleTask = swgQuest.getTask().getSubTasks().get(0);
 			
 			assertEquals("tusken_raider_soldier", destroyMultipleTask.getTargetServerTemplate());
 		}
@@ -163,17 +155,19 @@ public class TestSWGQuestFactory {
 		}
 		
 		@Test
-		public void testTaskOrder() {
-			List<SWGQuestTask> tasks = swgQuest.getTasks();
-			assertEquals(7, tasks.size());
+		public void testSubTasks() {
+			SWGQuestTask swgQuestTask = swgQuest.getTask();
+			List<SWGQuestTask> subTasks = swgQuestTask.getSubTasks();
 			
+			assertEquals(2, subTasks.size());
 			
-			SWGQuestTask first = tasks.get(0);
-			assertEquals("kill_tusken_raider_warriors", first.getName());
+			SWGQuestTask subTask1 = subTasks.get(0);
+			SWGQuestTask subTask2 = subTasks.get(1);
 			
-			SWGQuestTask seventh = tasks.get(6);
-			assertEquals("newbie_ranged_e8", seventh.getName());
+			assertEquals("Kill 5 Tusken Warriors", subTask1.getJournalEntryTitle());
+			assertEquals("Incoming Message From Jabba's Palace", subTask2.getJournalEntryTitle());
 		}
+		
 	}
 	
 }

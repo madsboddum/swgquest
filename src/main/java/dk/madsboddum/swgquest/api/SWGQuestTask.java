@@ -1,5 +1,8 @@
 package dk.madsboddum.swgquest.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SWGQuestTask {
 	
 	private SWGQuestTaskType type;
@@ -13,6 +16,19 @@ public class SWGQuestTask {
 	private String npcAppearanceServerTemplate;
 	private Boolean visible;
 	private String name;
+	private final List<SWGQuestTask> subTasks;
+	
+	SWGQuestTask() {
+		subTasks = new ArrayList<>();
+	}
+	
+	public List<SWGQuestTask> getSubTasks() {
+		return new ArrayList<>(subTasks);
+	}
+	
+	void addSubTask(SWGQuestTask subTask) {
+		subTasks.add(subTask);
+	}
 	
 	public String getName() {
 		return name;

@@ -7,10 +7,7 @@ import dk.madsboddum.swgquest.internal.XmlQuestTask;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class SWGQuestFactory {
 	
@@ -26,7 +23,6 @@ public class SWGQuestFactory {
 		}
 	}
 	
-	// TODO method could be prettier
 	private static SWGQuest convertToApiModel(XmlQuest xmlQuest) {
 		SWGQuest swgQuest = new SWGQuest();
 		
@@ -51,34 +47,11 @@ public class SWGQuestFactory {
 			}
 		}
 		
-		Collection<XmlQuestTask> xmlQuestTasks = xmlQuest.getTasks().getTasks();
-		
-		List<SWGQuestTask> swgQuestTasks = convertTasks(xmlQuestTasks);
-		Collections.reverse(swgQuestTasks);
-		
-		for (SWGQuestTask swgQuestTask : swgQuestTasks) {
-			swgQuest.addTask(swgQuestTask);
-		}
+		XmlQuestTask xmlQuestTask = xmlQuest.getTasks().getTask();
+		SWGQuestTask swgQuestTask = convertTask(xmlQuestTask);
+		swgQuest.setTask(swgQuestTask);
 		
 		return swgQuest;
-	}
-	
-	private static List<SWGQuestTask> convertTasks(Collection<XmlQuestTask> xmlQuestTasks) {
-		List<SWGQuestTask> swgQuestTasks = new ArrayList<>();
-		
-		for (XmlQuestTask xmlQuestTask : xmlQuestTasks) {
-			SWGQuestTask swgQuestTask = convertTask(xmlQuestTask);
-			Collection<XmlQuestTask> subTasks = xmlQuestTask.getSubTasks();
-			
-			if (subTasks != null) {
-				Collection<SWGQuestTask> subSwgQuestTasks = convertTasks(subTasks);
-				swgQuestTasks.addAll(subSwgQuestTasks);
-			}
-			
-			swgQuestTasks.add(swgQuestTask);
-		}
-		
-		return swgQuestTasks;
 	}
 	
 	private static SWGQuestTask convertTask(XmlQuestTask xmlQuestTask) {
@@ -106,6 +79,15 @@ public class SWGQuestFactory {
 				case "NPC Appearance Server Template": swgQuestTask.setNpcAppearanceServerTemplate(value); break;
 				case "isVisible": swgQuestTask.setVisible(Boolean.valueOf(value)); break;
 				case "taskName": swgQuestTask.setName(value); break;
+			}
+		}
+		
+		Collection<XmlQuestTask> subXmlQuestTasks = xmlQuestTask.getSubTasks();
+		
+		if (subXmlQuestTasks != null) {
+			for (XmlQuestTask subXmlQuestTask : subXmlQuestTasks) {
+				SWGQuestTask subSwgQuestTask = convertTask(subXmlQuestTask);
+				swgQuestTask.addSubTask(subSwgQuestTask);
 			}
 		}
 		

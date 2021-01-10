@@ -1,10 +1,7 @@
 package dk.madsboddum.swgquest.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SWGQuest {
-	private final List<SWGQuestTask> tasks;
+	private SWGQuestTask task;
 	private String journalEntryTitle;
 	private String journalEntryDescription;
 	private String journalEntryCompletionSummary;
@@ -18,7 +15,7 @@ public class SWGQuest {
 	private Integer tier;
 	
 	SWGQuest() {
-		tasks = new ArrayList<>();
+	
 	}
 	
 	public Integer getTier() {
@@ -29,12 +26,12 @@ public class SWGQuest {
 		this.tier = tier;
 	}
 	
-	public List<SWGQuestTask> getTasks() {
-		return new ArrayList<>(tasks);
+	public SWGQuestTask getTask() {
+		return task;
 	}
 	
-	public void addTask(SWGQuestTask task) {
-		tasks.add(task);
+	void setTask(SWGQuestTask task) {
+		this.task = task;
 	}
 	
 	public Integer getExperienceAmount() {
