@@ -1,9 +1,6 @@
 package dk.madsboddum.swgquest.api;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SWGQuest {
 	private SWGQuestTask task;
@@ -144,5 +141,17 @@ public class SWGQuest {
 		}
 		
 		return getTasksAtStep(subSubTasks, activeStep, depth + 1);
+	}
+	
+	public boolean isEveryTaskCompleted(int activeStep) {
+		List<SWGQuestTask> tasksForStep = getTasksForStep(activeStep);
+		
+		boolean questComplete = true;
+		
+		for (SWGQuestTask currentTask : tasksForStep) {
+			questComplete &= currentTask.getSubTasks().isEmpty();
+		}
+		
+		return questComplete;
 	}
 }

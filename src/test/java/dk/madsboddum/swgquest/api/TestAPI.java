@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAPI {
 	
@@ -112,6 +111,13 @@ public class TestAPI {
 			assertEquals("tusken_raider_zealot", task.getTargetServerTemplate());
 			assertEquals(5, task.getCount());
 		}
+		
+		@Test
+		public void testEveryTaskCompleteAtStep1() {
+			boolean complete = swgQuest.isEveryTaskCompleted(1);
+			
+			assertTrue(complete);
+		}
 	}
 	
 	@Nested
@@ -188,6 +194,20 @@ public class TestAPI {
 			
 			SWGQuestTask secondTask = tasksForStep.get(1);
 			assertEquals("Are you still doing tasks for the mayor? Hurry up, will you? Jabba's becoming impatient!", secondTask.getCommMessageText());
+		}
+		
+		@Test
+		public void testEveryTaskNotCompleteAtStep4() {
+			boolean complete = swgQuest.isEveryTaskCompleted(4);
+			
+			assertFalse(complete);
+		}
+		
+		@Test
+		public void testEveryTaskCompleteAtStep5() {
+			boolean complete = swgQuest.isEveryTaskCompleted(5);
+			
+			assertTrue(complete);
 		}
 	}
 	
